@@ -1,10 +1,10 @@
 # Build /go/bin/ipmi_exporter
-FROM quay.io/prometheus/golang-builder:1.13-base AS builder
+FROM golang:1.15 AS builder
 ADD . /go/src/github.com/soundcloud/ipmi_exporter/
 RUN cd /go/src/github.com/soundcloud/ipmi_exporter && make
 
 # Container image
-FROM ubuntu:18.04
+FROM debian:buster
 WORKDIR /
 RUN apt-get update \
     && apt-get install freeipmi-tools -y --no-install-recommends \
